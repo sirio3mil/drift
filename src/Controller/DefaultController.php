@@ -28,8 +28,12 @@ class DefaultController
 {
     /**
      * Default path.
+     *
+     * @param Request $request
+     *
+     * @return FulfilledPromise
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): FulfilledPromise
     {
         return new FulfilledPromise(
             new JsonResponse([
