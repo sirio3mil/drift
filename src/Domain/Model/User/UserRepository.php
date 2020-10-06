@@ -21,9 +21,9 @@ interface UserRepository
     public function delete(string $id): PromiseInterface;
 
     /**
-     * @param User $id
+     * @param User $user
      *
      * @return PromiseInterface<void>
      */
-    public function put(User $id): PromiseInterface;
+    public function put(User $user): PromiseInterface;
 }

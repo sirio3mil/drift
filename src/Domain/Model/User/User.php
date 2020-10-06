@@ -19,14 +19,6 @@ class User implements JsonSerializable
     }
 
     /**
-     * @return string
-     */
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    /**
      * @inheritDoc
      */
     public function jsonSerialize(): array
@@ -34,5 +26,13 @@ class User implements JsonSerializable
         return [
             'id' => $this->getId()
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
     }
 }

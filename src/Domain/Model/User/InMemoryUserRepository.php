@@ -3,16 +3,29 @@
 namespace App\Domain\Model\User;
 
 use React\Promise\PromiseInterface;
+use function React\Promise\reject;
+use function React\Promise\resolve;
 
 class InMemoryUserRepository implements UserRepository
 {
+
+    private array $data;
+
+    public function __construct()
+    {
+        $this->data = [];
+    }
 
     /**
      * @inheritDoc
      */
     public function get(string $id): PromiseInterface
     {
-        // TODO: Implement get() method.
+        if (empty($this->data[$id])) {
+            reject(new UserNotFoundException());
+        }
+
+        return resolve($this->data[$id]);
     }
 
     /**
@@ -20,14 +33,21 @@ class InMemoryUserRepository implements UserRepository
      */
     public function delete(string $id): PromiseInterface
     {
-        // TODO: Implement delete() method.
+        if (empty($this->data[$id])) {
+            reject(new UserNotFoundException());
+        }
+
+        unset($this->data[$id]);
+        return resolve();
     }
 
     /**
      * @inheritDoc
      */
-    public function put(User $id): PromiseInterface
+    public function put(User $user): PromiseInterface
     {
-        // TODO: Implement put() method.
+        $this->data[$user->getId()] = $user;
+
+        return resolve();
     }
 }
