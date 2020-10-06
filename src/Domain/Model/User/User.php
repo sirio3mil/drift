@@ -8,14 +8,18 @@ class User implements JsonSerializable
 {
     private string $id;
 
+    private string $name;
+
     /**
      * User constructor.
      *
      * @param string $id
+     * @param string $name
      */
-    public function __construct(string $id)
+    public function __construct(string $id, string $name)
     {
         $this->id = $id;
+        $this->name = $name;
     }
 
     /**
@@ -24,7 +28,8 @@ class User implements JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'id' => $this->getId()
+            'id' => $this->getId(),
+            'name' => $this->getName()
         ];
     }
 
@@ -34,5 +39,13 @@ class User implements JsonSerializable
     public function getId(): string
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 }

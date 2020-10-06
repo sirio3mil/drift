@@ -22,7 +22,7 @@ class InMemoryUserRepository implements UserRepository
     public function get(string $id): PromiseInterface
     {
         if (empty($this->data[$id])) {
-            reject(new UserNotFoundException());
+            return reject(new UserNotFoundException());
         }
 
         return resolve($this->data[$id]);
@@ -34,7 +34,7 @@ class InMemoryUserRepository implements UserRepository
     public function delete(string $id): PromiseInterface
     {
         if (empty($this->data[$id])) {
-            reject(new UserNotFoundException());
+            return reject(new UserNotFoundException());
         }
 
         unset($this->data[$id]);
