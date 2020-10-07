@@ -8,7 +8,10 @@ use React\EventLoop\LoopInterface;
 
 class InMemoryUserRepositoryTest extends UserRepositoryTest
 {
-
+    /**
+     * @param LoopInterface $loop
+     * @return UserRepository
+     */
     protected function getEmptyRepository(LoopInterface $loop): UserRepository
     {
         return new InMemoryUserRepository();
