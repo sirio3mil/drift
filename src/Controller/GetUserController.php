@@ -7,6 +7,7 @@ use App\Domain\Model\User\UserNotFoundException;
 use App\Domain\Query\GetUser;
 use Drift\CommandBus\Bus\QueryBus;
 use Drift\CommandBus\Exception\InvalidCommandException;
+use React\Promise\PromiseInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class GetUserController
@@ -29,10 +30,10 @@ class GetUserController
     /**
      * @param string $id
      *
-     * @return mixed
+     * @return PromiseInterface
      * @throws InvalidCommandException
      */
-    public function __invoke(string $id)
+    public function __invoke(string $id): PromiseInterface
     {
         $getUser = new GetUser($id);
 

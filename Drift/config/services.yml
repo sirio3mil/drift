@@ -47,3 +47,7 @@ services:
   App\Domain\QueryHandler\:
     resource: "%app_path%/src/Domain/QueryHandler"
     tags: [ 'query_handler' ]
+
+  App\Domain\CommandHandler\:
+    resource: "%app_path%/src/Domain/CommandHandler"
+    tags: [ 'command_handler' ]

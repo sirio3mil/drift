@@ -3,6 +3,10 @@ get_user:
   path: /users/{id}
   controller: App\Controller\GetUserController
   methods: [GET]
+put_user:
+  path: /users
+  controller: App\Controller\PutUserController
+  methods: [PUT]
 default:
   path: /
   controller: App\Controller\DefaultController
