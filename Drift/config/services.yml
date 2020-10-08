@@ -10,6 +10,15 @@ framework:
   php_errors:
     log: false
 
+event_bus:
+  exchanges:
+    events: events
+  async_pass_through: false
+  async_adapter:
+    adapter: amqp
+    amqp:
+      host: rabbitmq
+
 dbal:
   connections:
     users:
@@ -51,3 +60,6 @@ services:
   App\Domain\CommandHandler\:
     resource: "%app_path%/src/Domain/CommandHandler"
     tags: [ 'command_handler' ]
+
+  App\Domain\EventSubscriber\:
+    resource: "%app_path%/src/Domain/EventSubscriber"

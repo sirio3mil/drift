@@ -3,8 +3,10 @@
 namespace App\Domain\CommandHandler;
 
 use App\Domain\Command\PutUser;
+use App\Domain\Event\UserWasPut;
 use App\Domain\Model\User\UserNotFoundException;
 use App\Domain\Model\User\UserRepository;
+use Drift\EventBus\Bus\EventBus;
 use React\Promise\PromiseInterface;
 
 class PutUserHandler
@@ -13,15 +15,21 @@ class PutUserHandler
      * @var UserRepository
      */
     private UserRepository $userRepository;
+    /**
+     * @var EventBus
+     */
+    private EventBus $eventBus;
 
     /**
      * GetUserHandler constructor.
      *
      * @param UserRepository $userRepository
+     * @param EventBus $eventBus
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, EventBus $eventBus)
     {
         $this->userRepository = $userRepository;
+        $this->eventBus = $eventBus;
     }
 
     /**
@@ -31,6 +39,13 @@ class PutUserHandler
      */
     public function handle(PutUser $putUser): PromiseInterface
     {
-        return $this->userRepository->put($putUser->getUser());
+        $user = $putUser->getUser();
+        return $this
+            ->userRepository
+            ->put($user)
+            ->then(function () use ($user){
+                $event = new UserWasPut($user);
+                return $this->eventBus->dispatch($event);
+            });
     }
 }
